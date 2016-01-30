@@ -1,6 +1,7 @@
 module View where
 
 import Html exposing (div, button, text)
+import Html.Events exposing (onClick)
 import Graphics.Element exposing (..)
 import Graphics.Collage exposing (..)
 import Color
@@ -32,9 +33,10 @@ viewGrid g =
   |> Array.toList
   |> flow down
 
-view : Signal.Address a -> Grid -> Html.Html
+view : Signal.Address () -> Row -> Html.Html
 view address model =
   div []
         [ Html.text "BEHOLD!"
-        , div [] [ viewGrid model |> Html.fromElement ]
+        , div [] [ viewRow model |> Html.fromElement ]
+        , div [] [ button [ onClick address () ][ Html.text "Next!" ]]
         ]

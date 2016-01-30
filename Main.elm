@@ -1,7 +1,8 @@
 module Main where
 
 import StartApp.Simple as StartApp
-import Rule30 exposing (model, view, update)
+import Rule30 exposing (model, update)
+import View exposing (view)
 import Html
 
 main : Signal Html.Html
