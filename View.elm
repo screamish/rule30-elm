@@ -1,42 +1,26 @@
 module View where
 
 import Html exposing (div, button, text)
+import Html.Attributes exposing (style)
 import Html.Events exposing (onClick)
-import Graphics.Element exposing (..)
-import Graphics.Collage exposing (..)
-import Color
 import Array
 import Rule30 exposing (..)
 
-darkGrey : Color.Color
-darkGrey = Color.rgba 111 111 111 0.8
+viewSquare : Bool -> Html.Html
+viewSquare on =
+    div [if on then style [("backgroundColor", "black"), ("width", "20px"), ("height", "20px")]
+                  else style [("backgroundColor", "grey"), ("width", "20px"), ("height", "20px")]] []
 
-lightGrey : Color.Color
-lightGrey = Color.rgba 111 111 111 0.2
-
-viewSquare : Bool -> Element
-viewSquare s =
-  let shape = square 20 |> filled (if s then darkGrey else lightGrey)
-  in collage 20 20 [shape]
-
-viewRow : Row -> Element
+viewRow : Array.Array Bool -> List Html.Html
 viewRow row =
   row
   |> Array.map viewSquare
   |> Array.toList
-  |> flow right
-
-viewGrid : Grid -> Element
-viewGrid g =
-  g
-  |> Array.map viewRow
-  |> Array.toList
-  |> flow down
 
 view : Signal.Address () -> Row -> Html.Html
 view address model =
   div []
         [ Html.text "BEHOLD!"
-        , div [] [ viewRow model |> Html.fromElement ]
+        , div [style [("display", "flex")]]  (viewRow model)
         , div [] [ button [ onClick address () ][ Html.text "Next!" ]]
         ]
